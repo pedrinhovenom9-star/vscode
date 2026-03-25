@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de chamados</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f9;
+            margin: 0;
+        }
+
+        header {
+            background-color: #16213e;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        main {
+            padding: 20px;
+        }
+
+        section {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 500px;
+            margin: auto;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+        }
+
+        textarea {
+            resize: none;
+            height: 100px;
+        }
+
+        fieldset {
+            margin-top: 15px;
+            border-radius: 6px;
+            padding: 10px;
+            text-overflow: clip;
+            
+        }
+
+        button {
+            margin-top: 15px;
+            padding: 12px;
+            width: 100%;
+            border: none;
+            border-radius: 6px;
+            background-color: #0f3460;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #1a4a8a;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>Sistema de Chamados Senai</h1>
+    </header>
+
+    <main>
+        <section>
+
+            <h2>Abrir Chamado</h2>
+
+            <label for="nome">Seu nome completo:</label>
+            <input type="text" id="nome" placeholder="Nome">
+
+            <label for="email">Seu email:</label>
+            <input type="email" id="email" placeholder="Exemplo@gmail.com">
+
+            <label for="categoria">Categoria:</label>
+            <select id="categoria">
+                <option value="">Selecione</option>
+                <option value="Dúvida">Dúvida/Orientação</option>
+                <option value="Suporte">Suporte técnico</option>
+                <option value="Bug">Problema desconhecido</option>
+            </select>
+
+            <fieldset>
+                <legend>Departamento</legend>
+
+                <input type="radio" id="ti" name="departamento" value="TI">
+                <label for="ti">TI</label>
+
+                <input type="radio" id="rh" name="departamento" value="RH">
+                <label for="rh">RH</label>
+
+                <input type="radio" id="financeiro" name="departamento" value="Financeiro">
+                <label for="financeiro">Financeiro</label>
+            </fieldset>
+
+            <label for="descricao">Descrição:</label>
+            <textarea id="descricao" placeholder="Digite a descrição do problema"></textarea>
+
+            <button onclick="mostrarMensagem()">Enviar Chamado</button>
+            <button onclick="mostrarDados()">Ver Dados</button>
+
+        </section>
+    </main>
+
+    <script>
+
+        function mostrarMensagem() {
+            alert("Chamado enviado com sucesso!");
+        }
+
+        function mostrarDados() {
+
+            const nome = document.getElementById("nome").value;
+            const email = document.getElementById("email").value;
+            const categoria = document.getElementById("categoria").value;
+            const descricao = document.getElementById("descricao").value;
+
+            const departamentoSelecionado = document.querySelector('input[name="departamento"]:checked');
+
+            let departamento = departamentoSelecionado ? departamentoSelecionado.value : "Não selecionado";
+
+            alert(
+                "Nome: " + nome + "\n" +
+                "Email: " + email + "\n" +
+                "Categoria: " + categoria + "\n" +
+                "Departamento: " + departamento + "\n" +
+                "Descrição: " + descricao
+            );
+        }
+
+    </script>
+
+</body>
+
+</html>
