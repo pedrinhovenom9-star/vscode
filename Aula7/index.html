@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f4f6f9;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        /* Container do formulário */
+        form,
+        body {
+            max-width: 600px;
+            margin: auto;
+        }
+
+        /* Labels */
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+            color: #444;
+        }
+
+        /* Inputs, textarea e select */
+        input,
+        textarea,
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-sizing: border-box;
+            transition: 0.3s;
+        }
+
+        /* Efeito ao clicar */
+        input:focus,
+        textarea:focus,
+        select:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+
+        /* Fieldset */
+        fieldset {
+            margin-top: 20px;
+            border-radius: 10px;
+            border: 1px solid #ccc;
+            padding: 15px;
+        }
+
+        /* Alinhar checkbox e radio */
+        fieldset input {
+            width: auto;
+            margin-right: 5px;
+        }
+
+        /* Botões */
+        button {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 8px;
+            margin-top: 15px;
+            margin-right: 10px;
+            cursor: pointer;
+            color: white;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        /* Azul - Enviar */
+        button:nth-of-type(1) {
+            background-color: #007bff;
+        }
+
+        button:nth-of-type(1):hover {
+            background-color: #0056b3;
+        }
+
+        /* Cinza - Limpar */
+        button:nth-of-type(2) {
+            background-color: #6c757d;
+        }
+
+        button:nth-of-type(2):hover {
+            background-color: #545b62;
+        }
+
+        /* Vermelho - Deletar */
+        button:nth-of-type(3) {
+            background-color: #dc3545;
+        }
+
+        button:nth-of-type(3):hover {
+            background-color: #a71d2a;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <h1>LIVE DEMO FORM SENAI</h1>
+
+    <label for="text">Nome:</label>
+    <input type="text" name="nome" id="nome" placeholder="Digite seu nome">
+
+    <label for="email">Email:</label>
+    <input type="text" name="email" id="email" placeholder="Digite seu Email">
+
+    <label for="password">Nome:</label>
+    <input type="password" name="Senha" id="Senha" placeholder="Digite sua Senha">
+
+    <label for="number">Idade:</label>
+    <input type="number" name="idade" id="idade" placeholder="Digite sua idade">
+
+    <label for="Bio">Bio:</label>
+    <textarea id="bio" placeholder="Digite sua Bio"></textarea>
+
+    <label for="Opicoes">Opições:</label>
+    <select id="opicoes">
+        <option value="0">Ciência da computação</option>
+        <option value="1">Desenvolvimento de Sistemas</option>
+        <option value="2">Engenharia de Softwer</option>
+        <option value="3">outros</option>
+    </select>
+
+    <fieldset>
+
+        <legend>Checkbox:</legend>
+
+        <label for="HtmlSimple">Html & CSS</label>
+        <input type="checkbox" name="HtmlSimple" id="html">
+
+        <label for="python">Python</label>
+        <input type="checkbox" name="Python" id="python">
+
+        <label for="javaScript">Java Script</label>
+        <input type="checkbox" name="Js" id="js">
+
+        <label for="java">Java</label>
+        <input type="checkbox" name="Java" id="java">
+
+    </fieldset>
+
+    <fieldset>
+        <legend>Nivel de experiencia</legend>
+
+        <label for="iniciante">Iniciante</label>
+        <input type="radio" name="nivel" id="iniciante" value="Iniciante">
+        
+        <label for="intermediario">Intermediario</label>
+        <input type="radio" name="nivel" id="intermediario" value="Intermediario">
+        
+        <label for="avancado">Avançado</label>
+        <input type="radio" name="nivel" id="avancado" value="Avancado">
+            
+    </fieldset>
+
+    <label for="range">Pesquisa de satisfação ( 0-10):</label>
+    <input type="range" name="range" id="range">
+
+    <label for="upload">Upload cv</label>
+    <input type="file" name="file" id="file">
+
+
+
+
+    <label for="bnt">
+        <button type="submit" id="enviar">Enviar</button>
+        <button type="reset" id="limpar">Limpar</button>
+        <button type="button" id="deletar">Deletar</button>
+    </label>
+
+    <script>
+
+    </script>
+
+    </form>
+</body>
+
+
+</html>
