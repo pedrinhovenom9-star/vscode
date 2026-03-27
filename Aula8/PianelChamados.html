@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sistema de Chamados</title>
+
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body {
+        background: linear-gradient(135deg, #4e73df, #8e44ad);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-height: 100vh;
+    }
+
+    header {
+        width: 100%;
+        background: #f5f5f5;
+        padding: 15px;
+        text-align: center;
+        font-weight: bold;
+        border-bottom: 2px solid #ddd;
+    }
+
+    .container {
+        width: 600px;
+        margin-top: 20px;
+    }
+
+    .cards {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+    }
+
+    .card {
+        flex: 1;
+        margin: 5px;
+        padding: 15px;
+        color: white;
+        border-radius: 8px;
+        text-align: center;
+    }
+
+    .card h2 {
+        font-size: 28px;
+    }
+
+    .blue { background: #3498db; }
+    .yellow { background: #f1c40f; color: #333; }
+    .green { background: #2ecc71; }
+    .red { background: #e74c3c; }
+
+    .box {
+        background: #fff;
+        border-radius: 8px;
+        padding: 20px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    .box h3 {
+        margin-bottom: 10px;
+        border-bottom: 2px solid #ddd;
+        padding-bottom: 5px;
+    }
+
+    label {
+        display: block;
+        margin-top: 10px;
+        font-size: 14px;
+    }
+
+    input, select, textarea {
+        width: 100%;
+        padding: 8px;
+        margin-top: 5px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+    }
+
+    textarea {
+        resize: none;
+        height: 80px;
+    }
+
+    .buttons {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 15px;
+    }
+
+    button {
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        color: white;
+        cursor: pointer;
+        width: 32%;
+    }
+
+    .btn-send { background: #6f42c1; }
+    .btn-view { background: #28a745; }
+    .btn-clear { background: #6c757d; }
+
+    .help {
+        font-size: 14px;
+        line-height: 1.6;
+    }
+</style>
+</head>
+
+<body>
+
+<header>Sistema de Chamados</header>
+
+<div class="container">
+
+    <div class="cards">
+        <div class="card blue">
+            <div>Abertos</div>
+            <h2>12</h2>
+        </div>
+        <div class="card yellow">
+            <div>Em Andamento</div>
+            <h2>5</h2>
+        </div>
+        <div class="card green">
+            <div>Resolvidos</div>
+            <h2>48</h2>
+        </div>
+        <div class="card red">
+            <div>Cancelados</div>
+            <h2>3</h2>
+        </div>
+    </div>
+
+    <div class="box">
+        <h3>Abrir Novo Chamado</h3>
+
+        <label>Nome Completo</label>
+        <input type="text" placeholder="Digite seu nome completo">
+
+        <label>Email</label>
+        <input type="email" placeholder="exemplo@empresa.com">
+
+        <label>Categoria</label>
+        <select>
+            <option>Selecione uma categoria</option>
+            <option>Suporte</option>
+            <option>Financeiro</option>
+        </select>
+
+        <label>Departamento</label>
+        <select>
+            <option>Tecnologia</option>
+            <option>RH</option>
+            <option>Financeiro</option>
+        </select>
+
+        <label>Prioridade</label>
+        <select>
+            <option>Selecione a prioridade</option>
+            <option>Baixa</option>
+            <option>Média</option>
+            <option>Alta</option>
+        </select>
+
+        <label>Descrição do Problema</label>
+        <textarea placeholder="Descreva o problema..."></textarea>
+
+        <div class="buttons">
+            <button class="btn-send">Enviar</button>
+            <button class="btn-view">Ver Dados</button>
+            <button class="btn-clear" onclick="limpar()">Limpar</button>
+        </div>
+    </div>
+
+    <div class="box help">
+        <h3>📞 Precisa de Ajuda?</h3>
+        <p>Email: suporte@empresa.com</p>
+        <p>Telefone: (99) 9999-9999</p>
+        <p>Horário: Segunda a Sexta, das 8h às 18h</p>
+    </div>
+
+</div>
+
+<script>
+function limpar() {
+    document.querySelectorAll("input, textarea").forEach(el => el.value = "");
+    document.querySelectorAll("select").forEach(el => el.selectedIndex = 0);
+}
+</script>
+
+</body>
+</html>

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <title>Desenvolvimento de Sistemas</title>
@@ -28,15 +29,39 @@
             border-radius: 10px;
         }
 
-        .s1 { background: #3498db; }
-        .s2 { background: #e74c3c; }
-        .s3 { background: #2ecc71; }
+        .topo section:hover {
+            background: #f3c230;
+            color: #000;
+        }
+
+        .s1 {
+            background: #3498db;
+        }
+
+        .s2 {
+            background: #e74c3c;
+        }
+
+        .s3 {
+            background: #2ecc71;
+        }
 
         .baixo {
-            background: #34495e;
+            background: #5a5555af;
             color: white;
             padding: 30px;
             border-radius: 10px;
+        }
+
+        .topo section:hover,
+        .baixo:hover {
+            background: #f3c230;
+            color: #000;
+        }
+
+
+        h1{
+            text-align: center;
         }
 
         h2 {
@@ -51,7 +76,9 @@
             margin: 20px auto 0;
         }
 
-        input, textarea, button {
+        input,
+        textarea,
+        button {
             padding: 10px;
             border: none;
             border-radius: 5px;
@@ -68,7 +95,10 @@
         }
     </style>
 </head>
+
 <body>
+
+    <h1>Desenvolvimento de Sistemas</h1>
 
     <div class="container">
         <div class="topo">
@@ -107,4 +137,5 @@
     </div>
 
 </body>
+
 </html>
