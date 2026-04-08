@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sistema de Chamados Automatizado</title>
+
+  <style>
+    /* MANTIVE SEUS ESTILOS ORIGINAIS E ADICIONEI PEQUENOS AJUSTES */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: Georgia, "Times New Roman", serif; background-color: #f0f4f8; color: #1a1a2e; font-size: 100%; }
+    h1 { font-size: 2rem; font-weight: 700; color: #16213e; margin-bottom: 4px; }
+    h2 { font-size: 1.4rem; font-weight: 600; color: #0f3460; border-bottom: 2px solid #0f3460; padding-bottom: 6px; margin-bottom: 20px; }
+    main { max-width: 940px; width: 95%; margin: 32px auto; }
+    section { background-color: #ffffff; border: 1px solid #d1dce8; border-radius: 8px; padding: 28px 32px; margin-bottom: 28px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+    
+    /* PAINEL DE STATUS */
+    .status-grid { display: flex; gap: 2%; flex-wrap: wrap; }
+    .status-card { flex: 1; min-width: 150px; background-color: #f7fafd; border: 1px solid #d1dce8; border-radius: 8px; padding: 18px 16px; text-align: center; position: relative; overflow: hidden; }
+    .status-card::before { content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 4px; }
+    .status-card.aberto::before { background-color: #3182ce; }
+    .status-card.andamento::before { background-color: #d69e2e; }
+    .status-card.resolvido::before { background-color: #38a169; }
+    .status-card.cancelado::before { background-color: #e53e3e; }
+    .status-card .numero { font-size: 2rem; font-weight: 700; display: block; }
+    
+    /* TABELA */
+    .tabela-wrapper { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; font-family: Arial, sans-serif; font-size: 0.875rem; margin-top: 10px; }
+    thead { background-color: #16213e; color: #e0e0e0; }
+    thead th { padding: 12px 14px; text-align: left; }
+    tbody tr { border-bottom: 1px solid #e2e8f0; }
+    tbody td { padding: 11px 14px; }
+
+    /* BADGES */
+    .badge { display: inline-block; padding: 3px 10px; border-radius: 12px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; }
+    .badge.aberto { background-color: #ebf4ff; color: #2b6cb0; }
+    .badge.andamento { background-color: #fefcbf; color: #975a16; }
+    .badge.resolvido { background-color: #f0fff4; color: #276749; }
+    .badge.cancelado { background-color: #fff5f5; color: #c53030; }
+
+    /* FORMULÁRIO */
+    .form-row { display: flex; gap: 4%; margin-bottom: 15px; }
+    .form-col { flex: 1; }
+    label { display: block; font-size: 0.875rem; font-weight: 600; margin-bottom: 4px; }
+    input, select, textarea { width: 100%; padding: 10px; border: 1px solid #b0c4d8; border-radius: 6px; }
+    button { background-color: #e94560; color: white; padding: 12px 30px; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; margin-top: 15px; }
+    button:hover { background-color: #c73652; }
+
+    @media (max-width: 600px) { .form-row { flex-direction: column; } .status-card { flex: 1 1 45%; margin-bottom: 10px; } }
+  </style>
+</head>
+
+<body>
+  <main>
+    <section>
+      <h2>Painel de Status</h2>
+      <div class="status-grid">
+        <div class="status-card aberto">
+          <span class="numero" id="count-aberto">0</span>
+          <span class="rotulo">Abertos</span>
+        </div>
+        <div class="status-card andamento">
+          <span class="numero" id="count-andamento">0</span>
+          <span class="rotulo">Em andamento</span>
+        </div>
+        <div class="status-card resolvido">
+          <span class="numero" id="count-resolvido">0</span>
+          <span class="rotulo">Resolvidos</span>
+        </div>
+        <div class="status-card cancelado">
+          <span class="numero" id="count-cancelado">0</span>
+          <span class="rotulo">Cancelados</span>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Abrir Novo Chamado</h2>
+      <form id="formChamado">
+        <div class="form-row">
+          <div class="form-col">
+            <label for="nome">Seu nome completo:</label>
+            <input type="text" id="nome" required placeholder="Ex.: João da Silva">
+          </div>
+          <div class="form-col">
+            <label for="email">E-mail para contato:</label>
+            <input type="email" id="email" required placeholder="Ex.: joao@empresa.com">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-col">
+            <label for="categoria">Categoria do chamado:</label>
+            <select id="categoria" required>
+              <option value="">-- Selecione --</option>
+              <option value="Suporte técnico">Suporte técnico</option>
+              <option value="Solicitação de equipamento">Solicitação de equipamento</option>
+              <option value="Acesso a sistemas">Acesso a sistemas</option>
+              <option value="Dúvidas administrativas">Dúvidas administrativas</option>
+            </select>
+          </div>
+          <div class="form-col">
+             <label>Departamento:</label>
+             <div style="display: flex; gap: 10px; padding-top: 10px;">
+                <input type="radio" name="depto" value="TI" id="ti" checked> <label for="ti">TI</label>
+                <input type="radio" name="depto" value="RH" id="rh"> <label for="rh">RH</label>
+                <input type="radio" name="depto" value="FIN" id="fin"> <label for="fin">Financ.</label>
+             </div>
+          </div>
+        </div>
+
+        <label for="descricao">Descrição detalhada:</label>
+        <textarea id="descricao" rows="3" required placeholder="Descreva o problema..."></textarea>
+
+        <button type="submit">Enviar chamado</button>
+      </form>
+    </section>
+
+    <section>
+      <h2>Chamados Recentes</h2>
+      <div class="tabela-wrapper">
+        <table id="tabelaChamados">
+          <thead>
+            <tr>
+              <th>Protocolo</th>
+              <th>Solicitante</th>
+              <th>Categoria</th>
+              <th>Departamento</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    // 1. Armazenamento dos dados (Array de Objetos)
+    let chamados = [
+      { protocolo: "#2026-001", nome: "Ana Ferreira", categoria: "Suporte técnico", depto: "TI", status: "andamento" },
+      { protocolo: "#2026-002", nome: "Carlos Mendes", categoria: "Acesso a sistemas", depto: "RH", status: "aberto" }
+    ];
+
+    const form = document.getElementById('formChamado');
+
+    // 2. Função para renderizar a tabela e o painel
+    function atualizarTela() {
+      const tbody = document.querySelector('#tabelaChamados tbody');
+      tbody.innerHTML = '';
+
+      // Contadores
+      let contagem = { aberto: 0, andamento: 0, resolvido: 0, cancelado: 0 };
+
+      // Criar linhas da tabela (do mais novo para o mais antigo)
+      chamados.slice().reverse().forEach(c => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${c.protocolo}</td>
+          <td>${c.nome}</td>
+          <td>${c.categoria}</td>
+          <td>${c.depto}</td>
+          <td><span class="badge ${c.status}">${c.status.replace('-', ' ')}</span></td>
+        `;
+        tbody.appendChild(tr);
+        contagem[c.status]++;
+      });
+
+      // Atualizar Painel de Status
+      document.getElementById('count-aberto').innerText = contagem.aberto;
+      document.getElementById('count-andamento').innerText = contagem.andamento;
+      document.getElementById('count-resolvido').innerText = contagem.resolvido;
+      document.getElementById('count-cancelado').innerText = contagem.cancelado;
+    }
+
+    // 3. Evento de envio do formulário
+    form.addEventListener('submit', function(e) {
+      e.preventDefault(); // Não recarrega a página
+
+      // Pegar valores
+      const nome = document.getElementById('nome').value;
+      const categoria = document.getElementById('categoria').value;
+      const depto = document.querySelector('input[name="depto"]:checked').value;
+      const protocolo = `#2026-00${chamados.length + 1}`;
+
+      // Adicionar novo objeto ao array
+      const novoChamado = {
+        protocolo: protocolo,
+        nome: nome,
+        categoria: categoria,
+        depto: depto,
+        status: "aberto" // Todo chamado novo começa como aberto
+      };
+
+      chamados.push(novoChamado);
+      
+      // Limpar formulário e atualizar visual
+      form.reset();
+      atualizarTela();
+      alert("Chamado " + protocolo + " enviado com sucesso!");
+    });
+
+    // Iniciar a tela com os dados iniciais
+    atualizarTela();
+  </script>
+</body>
+</html>

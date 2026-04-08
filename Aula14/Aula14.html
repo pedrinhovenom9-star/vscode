@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Sistema de Chamados</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            background: #f4f6f9;
+            padding: 20px;
+        }
+
+        section {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 500px;
+            margin: 10px auto;
+            shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            margin: 5px 0;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            color: white;
+        }
+
+        .btn-enviar {
+            background: #0f3460;
+        }
+
+        .btn-lista {
+            background: #28a745;
+            font-weight: bold;
+        }
+
+
+        .item-chamado {
+            background: #eef2f7;
+            margin: 10px 0;
+            padding: 15px;
+            border-left: 5px solid #28a745;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <section>
+        <h2>Abrir Chamado</h2>
+        <input type="text" id="nome" placeholder="Nome">
+        <input type="email" id="email" placeholder="Email">
+
+        <select id="categoria">
+            <option value="Dúvida">Dúvida</option>
+            <option value="Suporte">Suporte</option>
+        </select>
+
+        <textarea id="descricao" placeholder="Descrição"></textarea>
+
+        <button class="btn-enviar" onclick="mostrarMensagem()">Apenas Alert</button>
+
+        <button class="btn-lista" onclick="adicionarALista()">SALVAR NA LISTA</button>
+    </section>
+
+    <section id="areaDaLista">
+        <h3>Lista de Chamados (Array)</h3>
+        <div id="containerChamados">
+            <p style="color: gray;">Nenhum chamado na lista ainda.</p>
+        </div>
+    </section>
+
+    <script>
+        // O ARRAY (Banco de dados temporário)
+        const chamadosArray = [];
+
+        function adicionarALista() {
+            // 1. Pegar os elementos
+            const nome = document.getElementById("nome").value;
+            const email = document.getElementById("email").value;
+            const categoria = document.getElementById("categoria").value;
+            const descricao = document.getElementById("descricao").value;
+
+            // Validação básica
+            if (nome === "") { alert("Digite ao menos o nome!"); return; }
+
+            // 2. Criar o objeto e colocar no Array
+            const novoChamado = {
+                id: Date.now(), // gera um id único
+                nome: nome,
+                email: email,
+                categoria: categoria,
+                descricao: descricao
+            };
+
+            chamadosArray.push(novoChamado);
+
+            // 3. LOG NO CONSOLE (Aperte F12 no seu navegador para ver o Array aqui!)
+            console.log("Conteúdo atual do Array:");
+            console.table(chamadosArray);
+
+            // 4. MOSTRAR NO HTML (DOM)
+            atualizarTela();
+
+            // 5. LIMPAR CAMPOS
+            document.getElementById("nome").value = "";
+            document.getElementById("email").value = "";
+            document.getElementById("descricao").value = "";
+        }
+
+        function atualizarTela() {
+            const container = document.getElementById("containerChamados");
+            container.innerHTML = ""; // Limpa para não repetir
+
+            // Percorre o array e cria o HTML para cada item
+            chamadosArray.forEach((item, index) => {
+                container.innerHTML += `
+                    <div class="item-chamado">
+                        <strong>#${index + 1} - ${item.nome}</strong><br>
+                        <span>Assunto: ${item.categoria}</span><br>
+                        <small>Descrição: ${item.descricao}</small>
+                    </div>
+                `;
+            });
+        }
+
+        function mostrarMensagem() {
+            alert("Chamado enviado (Apenas alerta)");
+        }
+    </script>
+</body>
+
+</html>
